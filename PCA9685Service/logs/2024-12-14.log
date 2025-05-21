@@ -1,0 +1,7 @@
+2024-12-14 04:33:54,511 - INFO - __main__: Starting PCA9685Logger
+2024-12-14 04:35:02,655 - INFO - __main__: Received message: {"command":"SET_ANGLE", "servo": {"channel":0, "angle": 45}}
+2024-12-14 04:35:02,656 - INFO - __main__: Received request: Command: SET_ANGLE, Servo: Channel: 0, Angle: 45
+2024-12-14 04:35:36,759 - INFO - __main__: Received message: {"commandx":"SET_ANGLE", "servo": {"channel":0, "angle": 45}}
+2024-12-14 04:35:36,760 - ERROR - {'__main__'}: Request Invalid JSON Key - 'command'
+2024-12-14 04:36:37,745 - INFO - __main__: Received message: {"command":"SET_ANGLE", "servo": {"channel":0, "angle": 45}}
+2024-12-14 04:36:37,747 - INFO - __main__: Received request: Command: SET_ANGLE, Servo: Channel: 0, Angle: 45

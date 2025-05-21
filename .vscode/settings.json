@@ -1,0 +1,5 @@
+{
+    "editor.codeActionsOnSave": {},
+    "python.testing.autoTestDiscoverOnSaveEnabled": false,
+    "mypy.enabled": false
+}

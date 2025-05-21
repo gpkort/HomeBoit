@@ -1,0 +1,12 @@
+[Unit]
+Description=PCA9685-control
+After=network.target
+
+[Service]
+Type=idle
+Restart=on-failure
+User=root
+ExecStart=/bin/bash -c 'cd /etc/PCA9685-control/ && python3 main.py'
+
+[Install]
+WantedBy=multi-user.target
