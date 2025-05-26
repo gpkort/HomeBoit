@@ -9,3 +9,5 @@ Designed to run on [OrangePi Zero 2W. ](http://www.orangepi.org/html/hardWare/co
 ## Prerequisite
 
 Install adafruit_servokit python package globally.
+
+Install websockets python package gloablly

@@ -12,10 +12,12 @@ import os
 
 DEFAULT_LOGGER_DIR:str = 'logs'
 DEFAULT_LOGGER_LEVEL:int = INFO
+LOG_NAME:str = 'Homeboit_Logger'
 
 
 class ServiceLogger:
-    logger:Logger 
+    logger: Logger | None = None
+    
     @staticmethod
     def init_logger(logger_name:str| None = None,
                     log_dir:str = DEFAULT_LOGGER_DIR,
@@ -46,23 +48,28 @@ class ServiceLogger:
     
     @staticmethod    
     def log_info(name:str, msg:str)->None:
-        ServiceLogger.logger.info(f'{name}: {msg}') 
+        if ServiceLogger.logger is not None:
+            ServiceLogger.logger.info(f'{name}: {msg}') 
         
     @staticmethod
     def log_warning(name:str, msg:str)->None:
-        ServiceLogger.logger.warning(f'{name}: {msg}') 
+        if ServiceLogger.logger is not None:
+            ServiceLogger.logger.warning(f'{name}: {msg}') 
         
     @staticmethod
-    def log_debug(name:str, msg:str)->None:    
-        ServiceLogger.logger.debug(f'{name}: {msg}')
+    def log_debug(name:str, msg:str)->None: 
+        if ServiceLogger.logger is not None:   
+            ServiceLogger.logger.debug(f'{name}: {msg}')
         
     @staticmethod
     def log_critical(name:str, msg:str)->None:    
-        ServiceLogger.logger.critical(f'{name}: {msg}')
+        if ServiceLogger.logger is not None:   
+            ServiceLogger.logger.critical(f'{name}: {msg}')
         
     @staticmethod
     def log_exception(name:str, msg:str)->None:    
-        ServiceLogger.logger.exception(f'{name}: {msg}')
+        if ServiceLogger.logger is not None:   
+            ServiceLogger.logger.exception(f'{name}: {msg}')
      
     @staticmethod    
     def clean_up_log_dir(dir:str, days)->None:

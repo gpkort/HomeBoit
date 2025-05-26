@@ -1,10 +1,9 @@
-import time
 from adafruit_servokit import ServoKit
 
-NUMBER_OF_SERVOS = 16
-DEFAULT_I2C_ADDRESS = 0x40
-DEFAULT_FREQUENCY = 50
-TIME_DELAY = 0.2
+NUMBER_OF_SERVOS:int = 16
+DEFAULT_I2C_ADDRESS:int = 0x40
+DEFAULT_FREQUENCY:int = 50
+TIME_DELAY:float = 0.2
 
 class ServoException(Exception):
     def __init__(self, message:str):
@@ -18,8 +17,9 @@ class ServoException(Exception):
 class ServoControllerPCA9685:
     def __init__(self, 
                  board_address=DEFAULT_I2C_ADDRESS, 
-                 frequency=DEFAULT_FREQUENCY):
-        self.__kit:ServoKit = ServoKit(channels=NUMBER_OF_SERVOS, address=board_address)
+                 frequency=DEFAULT_FREQUENCY) -> None:
+        self.__kit:ServoKit  = ServoKit(channels=NUMBER_OF_SERVOS, 
+                                                 address=board_address)
         self.__kit.frequency = frequency        
     
     def update_servo_position(self, channel:int, angle:int)->None:

@@ -1,5 +1,11 @@
 {
     "editor.codeActionsOnSave": {},
-    "python.testing.autoTestDiscoverOnSaveEnabled": false,
-    "mypy.enabled": false
+    "python.testing.autoTestDiscoverOnSaveEnabled": true,
+    "mypy.enabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [],
+    "python.testing.unittestEnabled": false,
+    "python.testing.cwd": "${workspaceFolder}/tests",
+    "pythonTestExplorer.testFramework": "pytest",
+    "python.experiments.enabled": false,
 }
