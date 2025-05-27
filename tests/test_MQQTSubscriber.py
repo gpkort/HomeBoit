@@ -36,11 +36,33 @@ class TestSubscriber():
         result = MQSubscriber.add_topic("test/topic", mock_callback)
         
         assert result is True
+        MQSubscriber._client.subscribe.assert_called_once_with("test/topic")
         assert "test/topic" in MQSubscriber.topics.keys()
+
+    def test_topic_callbac_called(self, MQSubscriber):
+        def mock_callback(topic: str, payload: bytes):
+            assert topic == "test/topic"
+            assert payload == b"test_payload"
+        
+        MQSubscriber.add_topic("test/topic", mock_callback)
+        MQSubscriber._client.on_message("test/topic", b"test_payload")
+        
+        
+    def test_add_existing_topic(self, MQSubscriber):
+        def mock_callback(topic: str, payload: bytes):
+            pass
+        
+        MQSubscriber.add_topic("test/topic", mock_callback)
+        result = MQSubscriber.add_topic("test/topic", mock_callback)
+        
+        assert result is False
+        assert "test/topic" not in MQSubscriber.topics.keys()
     
     def test_remove_topic(self, MQSubscriber):
         def mock_callback(topic: str, payload: bytes):
             pass
+        MQSubscriber._client.unsubscribe = Mock(return_value=(mqtt.MQTT_ERR_SUCCESS, 1))
+        MQSubscriber._client.subscribe = Mock(return_value=(mqtt.MQTT_ERR_SUCCESS, 1))
         
         MQSubscriber.add_topic("test/topic", mock_callback)
         result = MQSubscriber.remove_topic("test/topic")

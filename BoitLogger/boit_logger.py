@@ -43,8 +43,8 @@ class ServiceLogger:
     
     @staticmethod    
     def log_error(name:str, msg:str)->None:
-        
-        ServiceLogger.logger.error(f'{name}: {msg}')
+        if ServiceLogger.logger is not None:
+            ServiceLogger.logger.error(f'{name}: {msg}')
     
     @staticmethod    
     def log_info(name:str, msg:str)->None:

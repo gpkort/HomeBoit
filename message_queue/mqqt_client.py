@@ -28,7 +28,7 @@ class Subscriber:
         
     @property
     def topics(self) -> dict[str, str]:
-        return {k:v._name__ for k, v in self._topics.items()}
+        return {k:v.__name__ for k, v in self._topics.items()}
 
     @property
     def is_connected(self)->bool:
@@ -47,27 +47,35 @@ class Subscriber:
         
     def add_topic(self, topic:str, callback:Callable[[str, bytes], None]) -> bool:
         if topic in self._topics.keys():
-            ServiceLogger.log_warning(__name__, f"{topic} already exists")
+            ServiceLogger.log_error(__name__, f"{topic} already exists")
             return False
         
         ServiceLogger.log_info(__name__, f"{topic} - Callback Added")
-        res, _ = self._client.subscribe(topic)
+        res = self._client.subscribe(topic)
         
-        if res != mqtt.MQTT_ERR_SUCCESS:
-            ServiceLogger.log_error(__name__, f"Failed to subscribe to {topic} with error code {res}")
-            self._topics[topic] = callback
+        if res[0] != mqtt.MQTT_ERR_SUCCESS:
+            ServiceLogger.log_error(__name__, f"Failed to subscribe to {topic} with error code {res}")            
             return False
         
+        self._topics[topic] = callback        
         
         return True
     
     def remove_topic(self, topic:str) -> bool:
-        success: bool = super().remove_topic(topic)
+        if topic not in self._topics.keys():
+            return True
         
-        if success:
-            ServiceLogger.log_info(__name__, f"{topic} - Callback Removed")
-            self._client.unsubscribe(topic)
-        return success
+
+        ServiceLogger.log_info(__name__, f"{topic} - Callback Removed")
+        result = self._client.unsubscribe(topic)
+
+        if result[0] != mqtt.MQTT_ERR_SUCCESS:
+            ServiceLogger.log_error(__name__, f"Failed to unsubscribe from {topic} with error code {result}")
+            return False
+        
+        del self._topics[topic]
+        
+        return True
     
     def clear_topics(self) -> None:        
         self._client.unsubscribe(list(self._topics.keys()))
